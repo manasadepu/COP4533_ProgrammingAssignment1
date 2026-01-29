@@ -1,6 +1,7 @@
 """Gale-Shapley hospital-proposing stable matching algorithm."""
 
 import sys
+import os
 
 def parse_input(filename):
     """Parse input file and return n, hospital_prefs, student_prefs (0-indexed)."""
@@ -69,14 +70,34 @@ def gale_shapley(n, hospital_prefs, student_prefs):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python matcher.py <input_file>")
+        print("Usage: python matcher.py <input_file>\n")
+        print("Examples:")
+        print("  python matcher.py example.in")
+        print("  python matcher.py ../data/example.in\n")
         sys.exit(1)
 
-    n, hospital_prefs, student_prefs = parse_input(sys.argv[1])
+    # Get script directory and data directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(script_dir, "..", "data")
+
+    # Resolve input file path - check if file exists as-is, otherwise look in data directory
+    input_file = sys.argv[1]
+    if not os.path.exists(input_file):
+        potential_path = os.path.join(data_dir, input_file)
+        if os.path.exists(potential_path):
+            input_file = potential_path
+
+    n, hospital_prefs, student_prefs = parse_input(input_file)
     matching, proposals = gale_shapley(n, hospital_prefs, student_prefs)
 
-    for h in range(n):
-        print(f"{h + 1} {matching[h] + 1}")
+    # Determine output path in data directory
+    output_path = os.path.join(data_dir, "example.out")
+
+    with open(output_path, "w") as f:
+        for h in range(n):
+            f.write(f"{h + 1} {matching[h] + 1}\n")
+    
+    print(f"Matching written to {output_path} ({n} pairs, {proposals} proposals)")
 
 
 if __name__ == "__main__":
