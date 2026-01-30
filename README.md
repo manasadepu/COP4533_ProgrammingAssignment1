@@ -25,7 +25,7 @@ From the `src/` directory:
 python matcher.py example.in
 ```
 
-**You do not need to provide the full path for an input file. The matcher.py automatically assumes the data directory!**
+**You do not need to provide the full path for an input file, matcher.py automatically assumes the data directory!**
 
 ### Running the Verifier
 The verifier checks if a matching is valid and stable.
@@ -35,4 +35,4 @@ From the `src/` directory:
 python verifier.py example.in example.out
 ```
 
-**You do not need to provide the full path for an input/output file. The matcher.py automatically assumes the data directory!**
+**You do not need to provide the full path for an input/output file, verifier.py automatically assumes the data directory!**
